@@ -4,6 +4,7 @@ const cors = require('cors');
 const productsRouter = require('./routes/products');
 const cartRoutes = require('./routes/cart'); 
 require('./db/connection');
+require('dotenv').config();
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/perfumeShop', {
@@ -19,6 +20,9 @@ app.use('/images', express.static('public/images'));
 app.use('/api/cart', cartRoutes);
 
 app.use('/facturas', express.static(path.join(__dirname, 'facturas')));
+
+const paypalRoutes = require('./routes/paypal');
+app.use('/api/paypal', paypalRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => console.log(`Servidor corriendo en puerto ${PORT}`));

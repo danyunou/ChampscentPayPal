@@ -134,3 +134,59 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+
+/* Contenedor de botones del carrito */
+.botones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+/* Contenedor del botón de PayPal */
+#paypal-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+/* Espaciado y alineación del enlace de regreso */
+a[href="index.html"] {
+  display: block;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.paypal-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+#paypal-button-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Estilo compacto para el botón de volver */
+a[href="index.html"] {
+  font-size: 13px;
+  padding: 6px 12px;
+  max-width: fit-content;
+  margin: 30px auto 0;
+  display: block;
+  border-radius: 6px;
+  background-color: #edf2f7;
+  color: #2d3748;
+  border: 1px solid #cbd5e0;
+  transition: background-color 0.2s ease;
+  text-align: center;
+}
+
+a[href="index.html"]:hover {
+  background-color: #e2e8f0;
+}

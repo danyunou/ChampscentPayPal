@@ -8,15 +8,24 @@
 </head>
 <body>
   <h1>Mi Carrito</h1>
+
   <ul id="carrito-list"></ul>
   <p id="total">Total: $0</p>
 
+  <!-- ✅ Botones agrupados con estilo -->
+<div class="botones">
   <button onclick="vaciarCarrito()">Vaciar Carrito</button>
   <button onclick="pagar()">Pagar</button>
-  <br /><br />
+  <div class="paypal-wrapper">
+    <div id="paypal-button-container"></div>
+  </div>
+</div>
+
+  <div id="paypal-button-container"></div>
+
   <a href="index.html">← Volver al catálogo</a>
 
-  <!-- Script del carrito visual -->
+  <!-- Scripts -->
   <script>
     let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
@@ -48,10 +57,50 @@
       actualizarCarrito();
     }
 
+    function calcularTotal() {
+      return carrito.reduce((sum, p) => sum + (p.precio * (p.cantidad || 1)), 0).toFixed(2);
+    }
+
+    // Cargar botón de PayPal
+    fetch('http://localhost:3000/api/paypal/client-id')
+      .then(res => res.json())
+      .then(data => {
+        const script = document.createElement('script');
+        script.src = `https://www.paypal.com/sdk/js?client-id=${data.clientId}&currency=USD`;
+        script.onload = renderPayPalButtons;
+        document.head.appendChild(script);
+      });
+
+    function renderPayPalButtons() {
+      paypal.Buttons({
+        createOrder: function(data, actions) {
+          return fetch('http://localhost:3000/api/paypal/create-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ total: calcularTotal() })
+          })
+          .then(res => res.json())
+          .then(data => data.id);
+        },
+        onApprove: function(data, actions) {
+          return fetch('http://localhost:3000/api/paypal/capture-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ orderID: data.orderID })
+          })
+          .then(res => res.json())
+          .then(details => {
+            alert('Pago realizado por ' + details.details.payer.name.given_name);
+            vaciarCarrito(); // Limpia el carrito
+          });
+        }
+      }).render('#paypal-button-container');
+    }
+
     actualizarCarrito();
   </script>
 
-  <!-- Lógica de pago (separada en archivo externo para claridad) -->
+  <!-- Script adicional (opcional) -->
   <script src="carrito.js"></script>
 </body>
 </html>
