@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Inventario</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>Panel de Inventario</h1>
+
+  <div id="auth">
+    <p>Introduce contraseña de administrador:</p>
+    <input type="password" id="clave" />
+    <button onclick="validarClave()">Entrar</button>
+  </div>
+
+  <div id="inventario" style="display:none">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th><th>Precio</th><th>Stock</th><th>Imagen</th><th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-productos"></tbody>
+    </table>
+
+    <h3>Agregar nuevo producto</h3>
+    <input placeholder="Nombre" id="nuevoNombre" />
+    <input placeholder="Descripción" id="nuevoDesc" />
+    <input placeholder="Precio" id="nuevoPrecio" type="number" />
+    <input placeholder="Stock" id="nuevoStock" type="number" />
+    <input placeholder="URL Imagen" id="nuevoImagen" />
+    <button onclick="agregarProducto()">Agregar</button>
+  </div>
+
+  <script src="inventario.js"></script>
+</body>
+</html>

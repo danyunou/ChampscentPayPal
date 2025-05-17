@@ -1,0 +1,11 @@
+# Node
+node_modules/
+.env
+
+# Facturas generadas
+Backend/facturas/
+
+# IDEs
+.vscode/
+*.log
+.DS_Store

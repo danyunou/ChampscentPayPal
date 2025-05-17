@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carrito - Champscent</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>Mi Carrito</h1>
+  <ul id="carrito-list"></ul>
+  <p id="total">Total: $0</p>
+
+  <button onclick="vaciarCarrito()">Vaciar Carrito</button>
+  <button onclick="pagar()">Pagar</button>
+  <br /><br />
+  <a href="index.html">← Volver al catálogo</a>
+
+  <!-- Script del carrito visual -->
+  <script>
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    function actualizarCarrito() {
+      const lista = document.getElementById('carrito-list');
+      const totalEl = document.getElementById('total');
+      lista.innerHTML = '';
+
+      let total = 0;
+      carrito.forEach((p, i) => {
+        total += p.precio * (p.cantidad || 1);
+        const item = document.createElement('li');
+        item.innerHTML = `${p.nombre} - $${p.precio} x ${p.cantidad || 1} 
+          <button onclick="eliminar(${i})">❌</button>`;
+        lista.appendChild(item);
+      });
+
+      totalEl.textContent = `Total: $${total.toFixed(2)}`;
+      localStorage.setItem("carrito", JSON.stringify(carrito));
+    }
+
+    function eliminar(index) {
+      carrito.splice(index, 1);
+      actualizarCarrito();
+    }
+
+    function vaciarCarrito() {
+      carrito = [];
+      actualizarCarrito();
+    }
+
+    actualizarCarrito();
+  </script>
+
+  <!-- Lógica de pago (separada en archivo externo para claridad) -->
+  <script src="carrito.js"></script>
+</body>
+</html>
