@@ -1,14 +1,18 @@
-// Backend/middleware/auth.js
-const PASSWORD = 'admin123'; // Cambia esto por seguridad
+const jwt = require('jsonwebtoken');
 
-function authMiddleware(req, res, next) {
-  const token = req.headers['authorization'];
+function verificarToken(req, res, next) {
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(' ')[1]; // ✅ extrae solo el token
 
-  if (token === PASSWORD) {
-    return next();
-  } else {
-    return res.status(401).json({ error: 'Unauthorized' });
+  if (!token) return res.status(401).json({ error: 'Falta token de autenticación' });
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded; // { id, rol }
+    next();
+  } catch (err) {
+    res.status(401).json({ error: 'Token inválido o expirado' });
   }
 }
 
-module.exports = authMiddleware;
+module.exports = verificarToken;

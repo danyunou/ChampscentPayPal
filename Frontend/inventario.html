@@ -4,35 +4,124 @@
   <meta charset="UTF-8" />
   <title>Inventario</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .top-bar button {
+      background-color: white;
+      border: 2px solid #000;
+      border-radius: 8px;
+      padding: 6px 14px;
+      cursor: pointer;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 0;
+    }
+
+    #inventario {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #ddd;
+    }
+
+    input {
+      width: 100%;
+      padding: 5px;
+    }
+
+    button {
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 8px;
+    }
+
+    .eliminar {
+      background-color: white;
+      color: crimson;
+      border: 2px solid crimson;
+    }
+
+    .eliminar:hover {
+      background-color: crimson;
+      color: white;
+    }
+
+    h3 {
+      margin-top: 2rem;
+    }
+  </style>
 </head>
 <body>
-  <h1>Panel de Inventario</h1>
-
-  <div id="auth">
-    <p>Introduce contraseña de administrador:</p>
-    <input type="password" id="clave" />
-    <button onclick="validarClave()">Entrar</button>
+  <div class="top-bar">
+    <button onclick="location.href='index.html'">Ver catálogo de cliente</button>
+    <button onclick="cerrarSesion()">Cerrar sesión</button>
   </div>
 
-  <div id="inventario" style="display:none">
+  <h1>Panel de Inventario</h1>
+
+  <div id="inventario">
     <table>
       <thead>
         <tr>
-          <th>Nombre</th><th>Precio</th><th>Stock</th><th>Imagen</th><th>Acciones</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th>Imagen</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody id="tabla-productos"></tbody>
     </table>
 
     <h3>Agregar nuevo producto</h3>
-    <input placeholder="Nombre" id="nuevoNombre" />
-    <input placeholder="Descripción" id="nuevoDesc" />
-    <input placeholder="Precio" id="nuevoPrecio" type="number" />
-    <input placeholder="Stock" id="nuevoStock" type="number" />
-    <input placeholder="URL Imagen" id="nuevoImagen" />
-    <button onclick="agregarProducto()">Agregar</button>
+    <table>
+      <tr>
+        <td><input placeholder="Nombre" id="nuevoNombre" /></td>
+        <td><input placeholder="Descripción" id="nuevoDesc" /></td>
+        <td><input placeholder="Precio" id="nuevoPrecio" type="number" /></td>
+        <td><input placeholder="Stock" id="nuevoStock" type="number" /></td>
+        <td><input placeholder="URL Imagen" id="nuevoImagen" /></td>
+        <td><button onclick="agregarProducto()">Agregar</button></td>
+      </tr>
+    </table>
   </div>
 
   <script src="inventario.js"></script>
+  <script>
+    function cerrarSesion() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('rol');
+      location.href = 'login.html';
+    }
+  </script>
 </body>
 </html>

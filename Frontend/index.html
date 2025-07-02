@@ -7,9 +7,59 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a href="carrito.html">🛒 Ver Carrito</a>
+  <script>
+    // Redirigir si no hay token
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = 'login.html';
+    }
+  </script>
+
+
+  <header class="top-bar">
+    <div id="auth-buttons" class="auth-buttons"></div>
+  </header>
+
   <h1>Champscent</h1>
   <div id="product-list"></div>
+
+  <!-- Modal de detalles -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close" onclick="cerrarModal()">×</span>
+      <img id="modal-img" />
+      <h2 id="modal-nombre"></h2>
+      <p id="modal-desc"></p>
+      <p id="modal-precio"></p>
+      <p id="modal-stock"></p>
+    </div>
+  </div>
+
+  <script>
+    const authContainer = document.getElementById('auth-buttons');
+    const rol = localStorage.getItem('rol');
+
+    if (token) {
+      authContainer.innerHTML = `
+        <a href="carrito.html">🛒 Ver Carrito</a>
+        ${rol === 'admin' ? '<a href="inventario.html">📦 Inventario</a>' : ''}
+        <button onclick="cerrarSesion()">Cerrar sesión</button>
+      `;
+    } else {
+      authContainer.innerHTML = `
+        <a href="login.html">Iniciar sesión</a>
+        <a href="registro.html">Registrarse</a>
+      `;
+    }
+
+    function cerrarSesion() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('rol');
+      alert('Sesión cerrada');
+      window.location.href = 'login.html';
+    }
+  </script>
+
   <script src="script.js"></script>
 </body>
 </html>

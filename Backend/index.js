@@ -15,9 +15,12 @@ mongoose.connect('mongodb://localhost:27017/perfumeShop', {
 const app = express();
 app.use(cors());
 app.use(express.json());
+
 app.use('/productos', productsRouter);
 app.use('/images', express.static('public/images'));
 app.use('/api/cart', cartRoutes);
+const authRoutes = require('./routes/auth');
+app.use('/auth', authRoutes);
 
 app.use('/facturas', express.static(path.join(__dirname, 'facturas')));
 

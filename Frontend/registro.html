@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro - Champscent</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>Registro de Usuario</h1>
+
+  <form id="form-registro">
+    <input type="text" id="nombre" placeholder="Nombre completo" required />
+    <input type="email" id="email" placeholder="Correo electrónico" required />
+    <input type="password" id="password" placeholder="Contraseña" required />
+
+    <select id="pregunta" required>
+      <option value="">Selecciona una pregunta de seguridad</option>
+      <option value="¿Cuántos años tienes?">¿Cuántos años tienes?</option>
+      <option value="¿Cuántas mascotas tienes?">¿Cuántas mascotas tienes?</option>
+      <option value="¿Cuál es tu color favorito?">¿Cuál es tu color favorito?</option>
+      <option value="¿En qué ciudad naciste?">¿En qué ciudad naciste?</option>
+    </select>
+
+    <input type="text" id="respuesta" placeholder="Respuesta" required />
+    <button type="submit">Registrarse</button>
+  </form>
+
+  <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+
+  <script src="registro.js"></script>
+</body>
+</html>
